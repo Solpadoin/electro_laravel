@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -12,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'store'])->name('/');
-Route::get('/checkout', [App\Http\Controllers\ProductController::class, 'checkOut'])->name('checkout');
-Route::get('/index', [App\Http\Controllers\HomeController::class, 'main'])->name('index');
-Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'showProduct'])->name('product.show');
-Route::get('/store', [App\Http\Controllers\StoreController::class, 'index'])->name('store');
-Route::get('/store/search', [App\Http\Controllers\StoreController::class, 'search'])->name('store.search');
+Route::get('/', [HomeController::class, 'store'])->name('/');
+Route::get('/checkout', [ProductController::class, 'checkOut'])->name('checkout');
+Route::get('/index', [HomeController::class, 'main'])->name('index');
+Route::get('/product/{id}', [ProductController::class, 'showProduct'])->name('product.show');
+Route::get('/store', [StoreController::class, 'index'])->name('store');
+Route::get('/store/search', [StoreController::class, 'search'])->name('store.search');
 
 Route::group(['middleware' => 'auth'],
     function () {
@@ -25,17 +26,17 @@ Route::group(['middleware' => 'auth'],
             'prefix' => '/order',
         ],
             function () {
-                Route::post('/{id}/{count}', [App\Http\Controllers\ProductController::class, 'createOrderSingle'])->name('product.order');
-                Route::post('/all', [App\Http\Controllers\ProductController::class, 'createOrderAll'])->name('product.order.all');
-                Route::delete('/all/delete', [App\Http\Controllers\ProductController::class, 'deleteOrderAll'])->name('product.order.all.delete');
+                Route::post('/{id}/{count}', [ProductController::class, 'createOrderSingle'])->name('product.order');
+                Route::post('/all', [ProductController::class, 'createOrderAll'])->name('product.order.all');
+                Route::delete('/all/delete', [ProductController::class, 'deleteOrderAll'])->name('product.order.all.delete');
         });
 
         Route::group([
             'prefix' => '/cart',
         ],
             function () {
-                Route::post('/{id}/{count}', [App\Http\Controllers\ProductController::class, 'addToCart'])->name('product.cart.add');
-                Route::delete('/delete/{id}', [App\Http\Controllers\ProductController::class, 'deleteFromCart'])->name('product.cart.delete');
+                Route::post('/{id}/{count}', [ProductController::class, 'addToCart'])->name('product.cart.add');
+                Route::delete('/delete/{id}', [ProductController::class, 'deleteFromCart'])->name('product.cart.delete');
 
         });
 
@@ -43,19 +44,19 @@ Route::group(['middleware' => 'auth'],
             'prefix' => '/wishlist',
         ],
             function () {
-                Route::post('/{id}', [App\Http\Controllers\ProductController::class, 'wishlistAdd'])->name('product.wishlist.add');
-                Route::delete('/delete/{id}', [App\Http\Controllers\ProductController::class, 'wishlistDelete'])->name('product.wishlist.delete');
+                Route::post('/{id}', [ProductController::class, 'wishlistAdd'])->name('product.wishlist.add');
+                Route::delete('/delete/{id}', [ProductController::class, 'wishlistDelete'])->name('product.wishlist.delete');
         });
 
         Route::group([
             'prefix' => '/home',
         ],
             function () {
-                Route::get('', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-                Route::get('/wishlist', [App\Http\Controllers\ProductController::class, 'getWishlist'])->name('home.wishlist');
-                Route::get('/cart', [App\Http\Controllers\ProductController::class, 'getCart'])->name('home.cart');
+                Route::get('', [HomeController::class, 'index'])->name('home');
+                Route::get('/wishlist', [ProductController::class, 'getWishlist'])->name('home.wishlist');
+                Route::get('/cart', [ProductController::class, 'getCart'])->name('home.cart');
         });
     }
 );
 
-Auth::routes();
+\Auth::routes();

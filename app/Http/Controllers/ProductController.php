@@ -68,7 +68,7 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    private function writeToOrderModel($user, $product){
+    private function writeToOrderModel(User $user, Product $product){
         $userOrder = new UserOrder();
 
         $userOrder->user_id = $user->id;
