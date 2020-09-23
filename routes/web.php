@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,24 +12,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('store');
-})->name('/');
-
-Route::get('/test', function () {
-    if (env('APP_DEBUG') == true) {
-        return view('pages.testpage');
-    }
-});
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'store'])->name('/');
 Route::get('/checkout', [App\Http\Controllers\ProductController::class, 'checkOut'])->name('checkout');
-
-Route::get('/index', function () {
-    return view('pages.index');
-})->name('index');
-
+Route::get('/index', [App\Http\Controllers\HomeController::class, 'main'])->name('index');
 Route::get('/product/{id}', [App\Http\Controllers\ProductController::class, 'showProduct'])->name('product.show');
-
 Route::get('/store', [App\Http\Controllers\StoreController::class, 'index'])->name('store');
 Route::get('/store/search', [App\Http\Controllers\StoreController::class, 'search'])->name('store.search');
 

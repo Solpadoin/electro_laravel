@@ -32,4 +32,12 @@ class HomeController extends Controller
 
         return $userSearchModel->isEmpty() ? view('home') : view('home_recent', [ 'recent' => $recentProducts ]);
     }
+
+    public function store(){
+        return redirect()->route('store');
+    }
+
+    public function main(){
+        return view('pages.index');
+    }
 }
