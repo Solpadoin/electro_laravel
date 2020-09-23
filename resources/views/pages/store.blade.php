@@ -214,20 +214,21 @@
 
         <!-- store products -->
         <div class="row">
+        @foreach($products as $product)
             <!-- product -->
             <div class="col-md-4 col-xs-6">
-                <div class="product">
+                <a href ="{{ route('product.show', $product->id) }}"><div class="product">
                     <div class="product-img">
-                        <img src="./img/product01.png" alt="">
+                        <img src="{{ asset('./img/product0'.$product->id.'.png') }}" alt="">
                         <div class="product-label">
                             <span class="sale">-30%</span>
                             <span class="new">NEW</span>
                         </div>
                     </div>
                     <div class="product-body">
-                        <p class="product-category">Category</p>
-                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                        <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                        <p class="product-category">{{ $product->category }}</p>
+                        <h3 class="product-name"><a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</a></h3>
+                        <h4 class="product-price">$ {{ $product->price }}</del></h4>
                         <div class="product-rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -236,19 +237,29 @@
                             <i class="fa fa-star"></i>
                         </div>
                         <div class="product-btns">
-                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                            <form class="product-btns" method="post" action="{{ route('product.wishlist.add', $product->id) }}">
+                                @csrf
+                                <button class="add-to-wishlist" type="submit"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                            </form>
+
                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                             <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                         </div>
                     </div>
                     <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <form class="add-to-cart" method="post" action="{{ route('product.cart.add', [$product->id, 1]) }}">
+                            @csrf
+                            <button class="add-to-cart-btn" type="submit"><i class="fa fa-heart-o"></i><span class="tooltipp"> add to cart</span></button>
+                        </form>
+
+                        <!-- <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>-->
                     </div>
-                </div>
+                </div></a>
             </div>
             <!-- /product -->
-
-            <!-- product -->
+                <div class="clearfix visible-sm visible-xs"></div>
+        @endforeach
+            <!-- product
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -279,11 +290,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
 
             <div class="clearfix visible-sm visible-xs"></div>
 
-            <!-- product -->
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -306,11 +315,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
 
             <div class="clearfix visible-lg visible-md"></div>
 
-            <!-- product -->
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -333,11 +340,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
 
             <div class="clearfix visible-sm visible-xs"></div>
 
-            <!-- product -->
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -360,9 +365,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
 
-            <!-- product -->
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -390,11 +393,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
 
             <div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
 
-            <!-- product -->
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -422,9 +423,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
 
-            <!-- product -->
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -447,11 +446,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
 
             <div class="clearfix visible-sm visible-xs"></div>
 
-            <!-- product -->
             <div class="col-md-4 col-xs-6">
                 <div class="product">
                     <div class="product-img">
@@ -474,7 +471,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /product -->
+            -->
         </div>
         <!-- /store products -->
 

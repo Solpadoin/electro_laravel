@@ -109,14 +109,16 @@
                 <div><strong>TOTAL</strong></div>
             </div>
             <div class="order-products">
-                <div class="order-col">
-                    <div>1x Product Name Goes Here</div>
-                    <div>$980.00</div>
-                </div>
-                <div class="order-col">
+                @foreach($userOrder as $item)
+                    <div class="order-col">
+                        <div>{{ $item->count."x ".$item->title }}</div>
+                        <div>${{ $item->price }}</div>
+                    </div>
+                @endforeach
+                <!--<div class="order-col">
                     <div>2x Product Name Goes Here</div>
                     <div>$980.00</div>
-                </div>
+                </div>-->
             </div>
             <div class="order-col">
                 <div>Shiping</div>

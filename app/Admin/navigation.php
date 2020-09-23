@@ -41,24 +41,6 @@ return [
     ],
 
     [
-        'title' => 'Products',
-        'icon'  => 'fas fa-sitemap',
-        'url'   => route('admin.product'),
-    ],
-
-    [
-        'title' => 'Users',
-        'icon'  => 'fas fa-users',
-        'url'   => route('admin.users'),
-    ],
-
-    [
-        'title' => 'Orders',
-        'icon'  => 'fas fa-archive',
-        'url'   => route('admin.orders'),
-    ],
-
-    [
         'title' => 'Exit',
         'icon'  => 'fas fa-sign-out-alt',
         'url'   => route('admin.exit'),

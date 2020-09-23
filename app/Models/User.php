@@ -6,20 +6,17 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use LamaLama\Wishlist\HasWishlists;
+use LamaLama\Wishlist\Wishlistable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasWishlists; //, Wishlistable;
 
     /* Role const */
     const ROLE_USER = 'user';
     const ROLE_MANAGER = 'manager';
     const ROLE_ADMIN = 'admin';
-
-    /* Service const lines */
-    const SERVICE_STR_ADMIN = ' admin';
-    const SERVICE_STR_MANAGER = ' manager';
-    const SERVICE_STR_USER = ' user';
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'is_admin', 'password', 'remember_token',
     ];
 
     /**
@@ -48,7 +45,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Isn't good?
     public function isAdmin(){
        return $this->is_admin;
     }

@@ -2,19 +2,23 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Product;
+use App\Models\UserOrder;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
-
     /**
      * @var array
      */
     protected $sections = [
-        //\App\User::class => 'App\Http\Sections\Users',
+        User::class => 'App\Http\Sections\UsersSection',
+        Product::class => 'App\Http\Sections\ProductsSection',
+        UserOrder::class => 'App\Http\Sections\OrdersSection',
     ];
 
-    /**
+    /**Ы
      * Register sections.
      *
      * @param \SleepingOwl\Admin\Admin $admin
@@ -23,7 +27,6 @@ class AdminSectionsServiceProvider extends ServiceProvider
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
     	//
-
         parent::boot($admin);
     }
 }
