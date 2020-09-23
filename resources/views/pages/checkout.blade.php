@@ -126,7 +126,7 @@
             </div>
             <div class="order-col">
                 <div><strong>TOTAL</strong></div>
-                <div><strong class="order-total">$2940.00</strong></div>
+                <div><strong class="order-total">$ {{ $totalPrice }}</strong></div>
             </div>
         </div>
         <div class="payment-method">

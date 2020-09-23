@@ -71,8 +71,8 @@ class ProductController extends Controller
     private function writeToOrderModel($user, $product){
         $userOrder = new UserOrder();
 
-        $userOrder->userId = $user->id;
-        $userOrder->productId = $product->id;
+        $userOrder->user_id = $user->id;
+        $userOrder->product_id = $product->id;
         $userOrder->price = $product->price;
         $userOrder->count = 1;
         $userOrder->email = $user->email;
@@ -94,7 +94,7 @@ class ProductController extends Controller
     }
 
     public function deleteOrderAll(){
-        UserOrder::where('userId', '=', Auth::user()->id)->delete();
+        UserOrder::where('user_id', '=', Auth::user()->id)->delete();
         return redirect()->back();
     }
 
@@ -145,11 +145,17 @@ class ProductController extends Controller
 
     public function checkOut()
     {
-        $userOrder = UserOrder::where('userId', '=', Auth::user()->id)->get();
+        $userOrder = UserOrder::where('user_id', '=', Auth::user()->id)->get();
         if (is_null($userOrder)) {
             return view('home');
         }
 
-        return view('pages.checkout', [ 'userOrder' => $userOrder ]);
+        $totalPrice = 0;
+        foreach ($userOrder as $item){
+            global $totalPrice;
+            $totalPrice += $item->price;
+        }
+
+        return view('pages.checkout', [ 'userOrder' => $userOrder, 'totalPrice' => $totalPrice ]);
     }
 }

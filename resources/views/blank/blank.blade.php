@@ -45,7 +45,7 @@
 <!-- /HEADER -->
 
 <!-- NAVIGATION -->
-@include('blank.parts._navigation')
+
 <!-- /NAVIGATION -->
 
 <!-- BREADCRUMB -->

@@ -57,7 +57,7 @@ class OrdersSection extends Section implements Initializable
     public function onDisplay($payload = [])
     {
         $columns = [
-            AdminColumn::text('id', '#')->setWidth('150px')->setHtmlAttribute('class', 'text-center'),
+            AdminColumn::text('id', '#')->setWidth('45px')->setHtmlAttribute('class', 'text-center'),
             AdminColumn::text('title', 'Title')
                 ->setWidth('160px')
                 ->setOrderable(function($query, $direction) {
@@ -72,42 +72,51 @@ class OrdersSection extends Section implements Initializable
                 })
                 ->setSearchable(true)
             ,
-            AdminColumn::link('userId', 'User ID')
+            AdminColumn::link('user_id', 'User ID')
+                ->setWidth('90px')
                 ->setSearchCallback(function($column, $query, $search){
                     return $query
-                        ->orWhere('userId', 'like', '%'.$search.'%')
+                        ->orWhere('user_id', 'like', '%'.$search.'%')
                     ;
                 })
                 ->setOrderable(function($query, $direction) {
-                    $query->orderBy('userId', $direction);
+                    $query->orderBy('user_id', $direction);
                 })
             ,
-            AdminColumn::link('productId', 'Product ID')
+            AdminColumn::link('product_id', 'Product ID')
+                ->setWidth('85px')
                 ->setSearchCallback(function($column, $query, $search){
                     return $query
-                        ->orWhere('productId', 'like', '%'.$search.'%')
+                        ->orWhere('product_id', 'like', '%'.$search.'%')
                         ;
                 })
                 ->setOrderable(function($query, $direction) {
-                    $query->orderBy('productId', $direction);
+                    $query->orderBy('product_id', $direction);
                 })
             ,
             AdminColumn::text('price', 'Price')
-                ->setWidth('160px')
+                ->setWidth('90px')
                 ->setOrderable(function($query, $direction) {
                     $query->orderBy('price', $direction);
                 })
                 ->setSearchable(true)
             ,
+            AdminColumn::boolean('is_confirmed', 'Confirmed')
+                ->setWidth('90px')
+                ->setOrderable(function($query, $direction) {
+                    $query->orderBy('is_confirmed', $direction);
+                })
+                ->setSearchable(false)
+            ,
             AdminColumn::text('count', 'Item Count')
-                ->setWidth('160px')
+                ->setWidth('60px')
                 ->setOrderable(function($query, $direction) {
                     $query->orderBy('count', $direction);
                 })
                 ->setSearchable(false)
             ,
             AdminColumn::text('created_at', 'Created / updated', 'updated_at')
-                ->setWidth('160px')
+                ->setWidth('80px')
                 ->setOrderable(function($query, $direction) {
                     $query->orderBy('updated_at', $direction);
                 })

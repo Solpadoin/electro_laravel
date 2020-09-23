@@ -49,8 +49,8 @@
                 <!-- LOGO -->
                 <div class="col-md-3">
                     <div class="header-logo">
-                        <a href="{{ route('index') }}" class="logo">
-                            <img src="./img/logo.png" alt="">
+                        <a href="{{ route('store') }}" class="logo">
+                            <img src="{{ asset('./img/logo.png') }}" alt="">
                         </a>
                     </div>
                 </div>
@@ -59,11 +59,11 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form method="get" action="{{ route('store.search') }}" role="search">
-                            <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="2">Category 02</option>
+                        <form method="GET" action="{{ route('store.search') }}">
+                            <select class="input-select" name="select" id="select">
+                                <option value="electronics">All Categories</option>
+                                <option value="laptops">Laptops</option>
+                                <option value="smartphones">Smartphones</option>
                             </select>
                             <input class="input" placeholder="Search here" name="search">
                             <button class="search-btn" type="submit">Search</button>

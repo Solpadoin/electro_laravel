@@ -147,9 +147,24 @@
         <!-- aside Widget -->
         <div class="aside">
             <h3 class="aside-title">Top selling</h3>
+
+            @foreach($sale as $product)
+                <div class="product-widget">
+                    <div class="product-img">
+                        <img src="{{ asset('./img/product0'.$product->id.'.png') }}" alt="">
+                    </div>
+                    <div class="product-body">
+                        <p class="product-category">{{ $product->category }}</p>
+                        <h3 class="product-name"><a href="{{ route('product.show', $product->id )}}">{{ $product->title }}</a></h3>
+                        <h4 class="product-price">${{ $product->price }}</h4>
+                    </div>
+                </div>
+            @endforeach
+
+            <!--
             <div class="product-widget">
                 <div class="product-img">
-                    <img src="./img/product01.png" alt="">
+                    <img src="{{ asset('./img/product02.png') }}" alt="">
                 </div>
                 <div class="product-body">
                     <p class="product-category">Category</p>
@@ -160,25 +175,14 @@
 
             <div class="product-widget">
                 <div class="product-img">
-                    <img src="./img/product02.png" alt="">
+                    <img src="{{ asset('./img/product03.png') }}" alt="">
                 </div>
                 <div class="product-body">
                     <p class="product-category">Category</p>
                     <h3 class="product-name"><a href="#">product name goes here</a></h3>
                     <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
                 </div>
-            </div>
-
-            <div class="product-widget">
-                <div class="product-img">
-                    <img src="./img/product03.png" alt="">
-                </div>
-                <div class="product-body">
-                    <p class="product-category">Category</p>
-                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                </div>
-            </div>
+            </div>-->
         </div>
         <!-- /aside Widget -->
     </div>
