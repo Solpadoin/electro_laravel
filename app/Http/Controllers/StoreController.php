@@ -10,18 +10,19 @@ class StoreController extends Controller
 {
     private $allCategories = [
         'laptops',
-        'smartphones'
+        'smartphones',
+        'cameras',
+        'accessories'
     ];
 
     private $searchProducts;
 
     private function getTopSailingProducts () {
-        return Product::all()->take(3);
+        return Product::all()->take(config('store.top_sailing_show_count'));
     }
 
     public function index(){
-        $products = Product::all();
-        //$sale = $products->take(3);
+        $products = Product::paginate(config('store.default_pagination_count'));
 
         return view('pages.store', [
             'products' => $products,
@@ -38,7 +39,7 @@ class StoreController extends Controller
         return null;
     }
 
-    public function search(Request $request){
+    public function searchBySearchBar(Request $request){
         $searchText = $request->input('search');
         $selectElement = $request->input('select');
 
@@ -48,12 +49,45 @@ class StoreController extends Controller
             $this->searchProducts = $this->searchProducts->where('category', '=', $selectElement);
         }
 
+        //$this->searchProducts->paginate(config('store.default_pagination_count'));
+        //$this->searchProducts->get();
+
         /* Just write to DB last user search ( show this in his home page later... ) */
         $searchModel = new UserSearch();
         $searchModel->user_id = Auth::user()->id;
         $searchModel->last_search = json_encode($this->searchProducts);
         $searchModel->save();
 
-        return view('pages.store', [ 'products' => $this->searchProducts, 'sale' => $this->getTopSailingProducts() ]);
+        return view('pages.store', [
+            'products' => $this->searchProducts,
+            'sale' => $this->getTopSailingProducts() ]);
+    }
+
+    public function searchFull(Request $request){
+        $priceMin = $request->input('price-min');
+        $priceMax = $request->input('price-max');
+
+        $filterCategory = '';
+        foreach ($this->allCategories as $category){
+            if ($request->input($category)){
+                $filterCategory .= $category." ";
+            }
+        }
+
+        $filterArray = explode(" ", $filterCategory);
+        foreach ($filterArray as $element){
+            if (in_array($element, $this->allCategories)){
+                // to do //
+            }
+        }
+
+        $query = Product::where('price', '>', $priceMin)
+            ->where('price', '<', $priceMax)
+            ->where('category', 'LIKE', '%'.$filterCategory.'%')
+            ->paginate(config('store.default_pagination_count'));
+
+        return view('pages.store', [
+            'products' => $query,
+            'sale' => $this->getTopSailingProducts() ]);
     }
 }

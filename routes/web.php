@@ -18,7 +18,8 @@ Route::get('/checkout', [ProductController::class, 'checkOut'])->name('checkout'
 Route::get('/index', [HomeController::class, 'main'])->name('index');
 Route::get('/product/{id}', [ProductController::class, 'showProduct'])->name('product.show');
 Route::get('/store', [StoreController::class, 'index'])->name('store');
-Route::get('/store/search', [StoreController::class, 'search'])->name('store.search');
+Route::get('/store/search', [StoreController::class, 'searchBySearchBar'])->name('store.search');
+Route::get('/store/search/full', [StoreController::class, 'searchFull'])->name('store.search.full');
 
 Route::group(['middleware' => 'auth'],
     function () {
