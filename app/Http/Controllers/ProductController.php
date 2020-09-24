@@ -20,17 +20,12 @@ class ProductController extends Controller
     }
 
     private function wishlistManipulate($id, $delete = false){
-        if (is_null($id)) {
-            return redirect()->back();
+        if ($id) {
+            $user = Auth::user();
+            $product = Product::find($id);
+
+            $delete ? $user->unwish($product) : $user->wish($product);
         }
-
-        $user = Auth::user();
-        $product = Product::find($id);
-
-        if ($delete)
-            $user->unwish($product);
-        else
-            $user->wish($product);
 
         return redirect()->back();
     }
@@ -61,7 +56,7 @@ class ProductController extends Controller
     public function showProduct($productId){
         $product = Product::find($productId);
 
-        if (! is_null($product)) {
+        if ($product) {
             return view('pages.product', [ 'product' => $product ]);
         }
 
@@ -85,11 +80,10 @@ class ProductController extends Controller
         $user = Auth::user();
         $product = Product::find($id);
 
-        if (is_null($product)){
-            return redirect()->back();
+        if ($product){
+            $this->writeToOrderModel($user, $product);
         }
 
-        $this->writeToOrderModel($user, $product);
         return redirect()->back();
     }
 
@@ -111,26 +105,24 @@ class ProductController extends Controller
         foreach($wishlist as $item) {
             $product = Product::find($item->id);
 
-            if (is_null($product)) {
-                return redirect()->back();
+            if ($product) {
+                $this->writeToOrderModel($user, $product);
             }
-            $this->writeToOrderModel($user, $product);
         }
 
         return redirect()->back();
     }
 
     private function cartManipulate($id, $delete = null){
-        if (is_null($id)) {
-            return redirect()->back();
-        }
+        if ($id) {
+            $user = Auth::user();
+            $product = Product::find($id);
 
-        $user = Auth::user();
-        $product = Product::find($id);
-        if (is_null($delete) or $delete == false)
-            $user->wish($product, 'cart');
-        else
-            $user->unwish($product, 'cart');
+            if (! $delete or $delete == false)
+                $user->wish($product, 'cart');
+            else
+                $user->unwish($product, 'cart');
+        }
 
         return redirect()->back();
     }
@@ -146,16 +138,16 @@ class ProductController extends Controller
     public function checkOut()
     {
         $userOrder = UserOrder::where('user_id', '=', Auth::user()->id)->get();
-        if (is_null($userOrder)) {
-            return view('home');
+
+        if ($userOrder) {
+            $totalPrice = 0;
+            foreach ($userOrder as $item){
+                $totalPrice += $item->price;
+            }
+
+            return view('pages.checkout', [ 'userOrder' => $userOrder, 'totalPrice' => $totalPrice ]);
         }
 
-        $totalPrice = 0;
-        foreach ($userOrder as $item){
-            global $totalPrice;
-            $totalPrice += $item->price;
-        }
-
-        return view('pages.checkout', [ 'userOrder' => $userOrder, 'totalPrice' => $totalPrice ]);
+        return view('home');
     }
 }

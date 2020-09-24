@@ -31,11 +31,11 @@ class StoreController extends Controller
 
     /* Show to user last GLOBAl search */
     public function lastSearch(){
-        if (is_null($this->searchProducts)) {
-            return null;
+        if ($this->searchProducts) {
+            return $this->searchProducts;
         }
 
-        return $this->searchProducts;
+        return null;
     }
 
     public function search(Request $request){

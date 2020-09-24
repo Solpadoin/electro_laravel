@@ -29,12 +29,11 @@ class HomeController extends Controller
     {
         $userSearchModel = UserSearch::where('user_id', '=', Auth::user()->id)->limit(1)->get();
 
-        if ($userSearchModel->isEmpty())
-            return view('home');
-            
-        $recentProducts = collect(json_decode($userSearchModel[0]->last_search))->take(3);
-
-        return view('home_recent', [ 'recent' => $recentProducts ]);
+        if (! $userSearchModel->isEmpty()) {
+            $recentProducts = collect(json_decode($userSearchModel[0]->last_search))->take(3);
+            return view('home_recent', [ 'recent' => $recentProducts ]);
+        }
+        return view('home');
     }
 
     public function store(){
