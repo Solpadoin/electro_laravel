@@ -14,39 +14,39 @@
                 <input class="input" type="text" name="first-name" value="{{ $user->name }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="last-name" value="{{  $user->name }}">
+                <input class="input" type="text" name="last-name" value="{{ $user->name }}">
             </div>
             <div class="form-group">
                 <input class="input" type="email" name="email" value="{{ $user->email }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="address" value="{{ $user->address->address }}">
+                <input class="input" type="text" name="address" placeholder="Address" value="{{ $user->address->address ?? '' }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="city" value="{{ $user->address->city }}">
+                <input class="input" type="text" name="city" placeholder="City" value="{{ $user->address->city ?? '' }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="country" value="{{ $user->address->country }}">
+                <input class="input" type="text" name="country" placeholder="Country" value="{{ $user->address->country ?? '' }}">
             </div>
             <div class="form-group">
                 <input class="input" type="text" name="zip-code" value="ZIP Code">
             </div>
             <div class="form-group">
-                <input class="input" type="tel" name="tel" value="{{ $user->contacts->number }}">
+                <input class="input" type="tel" name="tel" placeholder="Telephone" value="{{ $user->contacts->number ?? '' }}">
             </div>
-            <div class="form-group">
-                <div class="input-checkbox">
-                    <input type="checkbox" id="create-account">
-                    <label for="create-account">
-                        <span></span>
-                        Create Account?
-                    </label>
-                    <div class="caption">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                        <input class="input" type="password" name="password" placeholder="Enter Your Password">
-                    </div>
-                </div>
-            </div>
+{{--            <div class="form-group">--}}
+{{--                <div class="input-checkbox">--}}
+{{--                    <input type="checkbox" id="create-account">--}}
+{{--                    <label for="create-account">--}}
+{{--                        <span></span>--}}
+{{--                        Create Account?--}}
+{{--                    </label>--}}
+{{--                    <div class="caption">--}}
+{{--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>--}}
+{{--                        <input class="input" type="password" name="password" placeholder="Enter Your Password">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
         <!-- /Billing Details -->
 

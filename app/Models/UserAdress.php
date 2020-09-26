@@ -18,7 +18,7 @@ class UserAdress extends Model
     public function __construct(){
         parent::__construct();
     }
-    
+
     public function user(){
         return $this->belongsTo(User::class);
     }

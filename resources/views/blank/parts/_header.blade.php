@@ -10,9 +10,9 @@
             <ul class="header-links pull-right">
                 <li class="nav-item dropdown">
                     @guest
-                        <a href="#"><i class="fa fa-dollar"></i> USD</a>
+                        <a href="#"><i class="fa fa-dollar"></i> 0</a>
                     @else
-                        <a href="#">&nbsp {{ Auth::user()->currency->currency }} <i class="fa fa-dollar"></i></a>
+                        <a href="#"><i class="fa fa-dollar"></i>&nbsp{{ Auth::user()->currency->currency }}</a>
                     @endguest
                 </li>
                 @guest
