@@ -18,6 +18,10 @@ class CheckoutController extends Controller
                 $total_price += $item->price;
             }
 
+            if ($user->contacts->number){
+
+            }
+
             return view('pages.checkout', [
                 'userOrder' => $user_order,
                 'totalPrice' => $total_price,

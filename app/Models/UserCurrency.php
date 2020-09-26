@@ -20,6 +20,13 @@ class UserCurrency extends Model
         $this->belongsTo(User::class);
     }
 
+    public static function init($user_id, $currency){
+        $user_currency = new self;
+        $user_currency->user_id = $user_id;
+        $user_currency->currency = $currency;
+        $user_currency->save();
+    }
+
     public function getCurrencyAttribute($value){
         return ucfirst($value);
     }
