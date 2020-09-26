@@ -17,7 +17,10 @@ class UserAdress extends Model
 
     public function __construct(){
         parent::__construct();
-        $this->belongsTo(User::class);
+    }
+    
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
     public function getAddressAttribute($value){

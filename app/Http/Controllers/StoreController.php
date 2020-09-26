@@ -43,20 +43,22 @@ class StoreController extends Controller
         $search_text = $request->input('search');
         $select_element = $request->input('select');
 
-        $this->search_products = Product::where('title', 'LIKE', '%'.$search_text.'%')->get();
+        $this->search_products = Product::where('title', 'LIKE', '%'.$search_text.'%');
 
         if (in_array($select_element, $this->all_categories)) {
             $this->search_products = $this->search_products->where('category', '=', $select_element);
         }
 
+        $products = $this->search_products->paginate(config('store.default_pagination_count'));
+
         /* Just write to DB last user search ( show this in his home page later... ) */
         $search_model = new UserSearch();
         $search_model->user_id = Auth::user()->id;
-        $search_model->last_search = json_encode($this->search_products);
+        $search_model->last_search = json_encode($this->search_products->get());
         $search_model->save();
 
         return view('pages.store', [
-            'products' => $this->search_products,
+            'products' => $products,
             'sale' => $this->getTopSailingProducts() ]);
     }
 

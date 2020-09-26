@@ -57,7 +57,7 @@
             <div class="col-md-12">
                 <h3 class="breadcrumb-header">@yield('page')</h3>
                 <ul class="breadcrumb-tree">
-                    <li><a href="{{ route('index') }}">Home</a></li>
+                    <li><a href="{{ route('store') }}">Home</a></li>
                     <li class="active">@yield('page')</li>
                 </ul>
             </div>
