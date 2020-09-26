@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', [HomeController::class, 'store'])->name('/');
-Route::get('/checkout', [ProductController::class, 'checkOut'])->name('checkout');
 Route::get('/index', [HomeController::class, 'main'])->name('index');
 Route::get('/product/{id}', [ProductController::class, 'showProduct'])->name('product.show');
 Route::get('/store', [StoreController::class, 'index'])->name('store');
@@ -23,6 +21,8 @@ Route::get('/store/search/full', [StoreController::class, 'searchFull'])->name('
 
 Route::group(['middleware' => 'auth'],
     function () {
+        Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+
         Route::group([
             'prefix' => '/order',
         ],

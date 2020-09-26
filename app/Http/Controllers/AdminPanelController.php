@@ -5,8 +5,7 @@ use Illuminate\Http\Request;
 
 class AdminPanelController extends Controller
 {
-    public function getUsers()
-    {
+    public function getUsers(){
         //return AdminSection::view(view('store'));
     }
 }

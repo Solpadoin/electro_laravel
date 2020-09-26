@@ -18,7 +18,7 @@ class AdminAuthentification
      */
     public function handle(Request $request, Closure $next)
     {
-        //$auth = Auth::guard($guard);
+        /*
         $auth = Auth::user();
 
         if (is_null($auth))
@@ -38,6 +38,28 @@ class AdminAuthentification
         }
 
         if (! $request->user()->isAdmin()) {
+            return response('Access denied.', 401);
+        }
+
+        return $next($request);
+        */
+
+        $auth_user = Auth::user();
+
+        if (Auth::guard()->guest()){
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized.', 401);
+            }
+            else {
+                return redirect()->guest('login');
+            }
+        }
+
+        if (! $auth_user || ! $request->user()){
+            return response('Bad request', 403);
+        }
+
+        if (! $request->user()->hasAdminPanelAccess()) {
             return response('Access denied.', 401);
         }
 

@@ -45,8 +45,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function currency(){
+        return $this->hasOne(UserCurrency::class);
+    }
+
+    public function address(){
+        return $this->hasOne(UserAdress::class);
+    }
+
+    public function contacts(){
+        return $this->hasOne(UserContact::class);
+    }
+
     public function isAdmin(){
        return $this->is_admin;
+    }
+
+    public function hasAdminPanelAccess(){
+        if ($this->is_admin || $this->hasRole(self::ROLE_MANAGER)){
+            return true;
+        }
+
+        return false;
     }
 
     /* get user roles as array */

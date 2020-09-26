@@ -6,9 +6,6 @@
     @section('title', 'My account')
     @section('page', 'My account')
 @else
-     <!-- Upper User Panel -->
-     <!-- <li><a href="{{ route('home') }}"><i class="fa fa-user-o"></i>  {{ Auth::user()->name }}</a></li> -->
-
     @section('title')
         {{ Auth::user()->name." - Profile" }}
     @endsection

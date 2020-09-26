@@ -11,28 +11,28 @@
                 <h3 class="title">Billing address</h3>
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="first-name" placeholder="First Name">
+                <input class="input" type="text" name="first-name" value="{{ $user->name }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="last-name" placeholder="Last Name">
+                <input class="input" type="text" name="last-name" value="{{  $user->name }}">
             </div>
             <div class="form-group">
-                <input class="input" type="email" name="email" placeholder="Email">
+                <input class="input" type="email" name="email" value="{{ $user->email }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="address" placeholder="Address">
+                <input class="input" type="text" name="address" value="{{ $user->address->address }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="city" placeholder="City">
+                <input class="input" type="text" name="city" value="{{ $user->address->city }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="country" placeholder="Country">
+                <input class="input" type="text" name="country" value="{{ $user->address->country }}">
             </div>
             <div class="form-group">
-                <input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+                <input class="input" type="text" name="zip-code" value="ZIP Code">
             </div>
             <div class="form-group">
-                <input class="input" type="tel" name="tel" placeholder="Telephone">
+                <input class="input" type="tel" name="tel" value="{{ $user->contacts->number }}">
             </div>
             <div class="form-group">
                 <div class="input-checkbox">

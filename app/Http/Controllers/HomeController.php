@@ -25,14 +25,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        $userSearchModel = UserSearch::where('user_id', '=', Auth::user()->id)->limit(1)->get();
+    public function index(){
+        $query = UserSearch::where('user_id', '=', Auth::user()->id)->latest()->first();
 
-        if (! $userSearchModel->isEmpty()) {
-            $recentProducts = collect(json_decode($userSearchModel[0]->last_search))->take(3);
-            return view('home_recent', [ 'recent' => $recentProducts ]);
+        if ($query) {
+            $recent_products = collect($query)->take(config('store.recent_products_count'));
+            $products = collect(json_decode($recent_products['last_search']))->take(config('store.recent_products_count'));
+
+            $query->delete(); // clear our information when we recieve search info
+            return view('home_recent', [ 'recent' => $products ]);
         }
+
         return view('home');
     }
 

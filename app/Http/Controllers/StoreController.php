@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
-    private $allCategories = [
+    private $all_categories = [
         'laptops',
         'smartphones',
         'cameras',
         'accessories'
     ];
 
-    private $searchProducts;
+    private $search_products;
 
     private function getTopSailingProducts () {
         return Product::all()->take(config('store.top_sailing_show_count'));
@@ -32,59 +32,65 @@ class StoreController extends Controller
 
     /* Show to user last GLOBAl search */
     public function lastSearch(){
-        if ($this->searchProducts) {
-            return $this->searchProducts;
+        if ($this->search_products) {
+            return $this->search_products;
         }
 
         return null;
     }
 
     public function searchBySearchBar(Request $request){
-        $searchText = $request->input('search');
-        $selectElement = $request->input('select');
+        $search_text = $request->input('search');
+        $select_element = $request->input('select');
 
-        $this->searchProducts = Product::where('title', 'LIKE', '%'.$searchText.'%')->get();
+        $this->search_products = Product::where('title', 'LIKE', '%'.$search_text.'%')->get();
 
-        if (in_array($selectElement, $this->allCategories)) {
-            $this->searchProducts = $this->searchProducts->where('category', '=', $selectElement);
+        if (in_array($select_element, $this->all_categories)) {
+            $this->search_products = $this->search_products->where('category', '=', $select_element);
         }
 
-        //$this->searchProducts->paginate(config('store.default_pagination_count'));
-        //$this->searchProducts->get();
-
         /* Just write to DB last user search ( show this in his home page later... ) */
-        $searchModel = new UserSearch();
-        $searchModel->user_id = Auth::user()->id;
-        $searchModel->last_search = json_encode($this->searchProducts);
-        $searchModel->save();
+        $search_model = new UserSearch();
+        $search_model->user_id = Auth::user()->id;
+        $search_model->last_search = json_encode($this->search_products);
+        $search_model->save();
 
         return view('pages.store', [
-            'products' => $this->searchProducts,
+            'products' => $this->search_products,
             'sale' => $this->getTopSailingProducts() ]);
     }
 
     public function searchFull(Request $request){
-        $priceMin = $request->input('price-min');
-        $priceMax = $request->input('price-max');
+        $price_min = $request->input('price-min');
+        $price_max = $request->input('price-max');
 
-        $filterCategory = '';
-        foreach ($this->allCategories as $category){
+        $filter_category = '';
+        foreach ($this->all_categories as $category){
             if ($request->input($category)){
-                $filterCategory .= $category." ";
+                $filter_category .= $category;
             }
         }
 
-        $filterArray = explode(" ", $filterCategory);
-        foreach ($filterArray as $element){
-            if (in_array($element, $this->allCategories)){
-                // to do //
-            }
-        }
-
-        $query = Product::where('price', '>', $priceMin)
+        /*
+        $query = Product::where('price', '>', $price_min)
             ->where('price', '<', $priceMax)
-            ->where('category', 'LIKE', '%'.$filterCategory.'%')
+            ->where('category', 'LIKE', '%'.$filter_category.'%')
             ->paginate(config('store.default_pagination_count'));
+        */
+
+        $query = Product::where('price', '>', $price_min)
+            ->where('price', '<', $price_max);
+
+        if ($filter_category){
+            $filter_array = explode(" ", $filter_category);
+            foreach ($filter_array as $element){
+                if (in_array($element, $this->all_categories)){
+                    $query->where('category', 'LIKE', '%'.$element.'%');
+                }
+            }
+        }
+
+        $query = $query->paginate(config('store.default_pagination_count'));
 
         return view('pages.store', [
             'products' => $query,

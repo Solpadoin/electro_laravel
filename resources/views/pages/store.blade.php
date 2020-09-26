@@ -231,7 +231,7 @@
         <!-- store bottom filter -->
         <div class="pull-right">
             @if ( method_exists ( $products , 'links' ) )
-                {{ $products->links() }}
+                {{ $products->appends(request()->query())->links() }}
             @endif
         </div>
         <!-- /store bottom filter -->

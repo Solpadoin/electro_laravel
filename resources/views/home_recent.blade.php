@@ -11,9 +11,9 @@
             <div class="section-nav">
                 <ul class="section-tab-nav tab-nav">
                     <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-                    <li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-                    <li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-                    <li><a data-toggle="tab" href="#tab1">Accessories</a></li>
+                    <li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
+                    <li><a data-toggle="tab" href="#tab3">Cameras</a></li>
+                    <li><a data-toggle="tab" href="#tab4">Accessories</a></li>
                 </ul>
             </div>
         </div>
@@ -31,7 +31,7 @@
                             <!-- product -->
                             <div class="product">
                                 <div class="product-img">
-                                    <img src="./img/product01.png" alt="">
+                                    <img src="{{ asset('./img/product0'.$product->id.'.png') }}" alt="">
                                     <div class="product-label">
                                         <span class="sale">-30%</span>
                                         <span class="new">NEW</span>

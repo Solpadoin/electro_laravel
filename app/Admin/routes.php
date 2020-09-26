@@ -1,6 +1,4 @@
 <?php
-// TO DO : REFACTOR THIS CODE
-// Don't allow to use our admin panel if user not authorized
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('', ['as' => 'admin.dashboard', function () {
@@ -20,7 +18,6 @@ Route::group(['middleware' => 'auth'], function () {
     }]);
 
     Route::get('exit', ['as' => 'admin.exit', function () {
-        //return AdminSection::view(view('pages.admin.exit'), 'My profile');
         return redirect()->route('home'); // why not ? :D
     }]);
 });

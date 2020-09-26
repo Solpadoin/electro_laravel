@@ -8,7 +8,13 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> Kyiv, Maidan Nezaleznosti street, 8-A</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+                <li class="nav-item dropdown">
+                    @guest
+                        <a href="#"><i class="fa fa-dollar"></i> USD</a>
+                    @else
+                        <a href="#">&nbsp {{ Auth::user()->currency->currency }} <i class="fa fa-dollar"></i></a>
+                    @endguest
+                </li>
                 @guest
                     <li><a href="{{ route('home') }}"><i class="fa fa-user-o"></i> My Account</a></li>
                 @else
@@ -19,16 +25,24 @@
                             <i class="fa fa-user-o"></i> {{ Auth::user()->name }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown" style="background-color: #808080;">
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown" style="background-color: #2E3440;">
+                            <a class="dropdown-item" href="{{ route('home') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('home-form').submit();">
+                                <i class="fa fa-home"></i> {{ __('Home') }}
+                                <form id="home-form" action="{{ route('home') }}" method="GET" class="d-none">
+                                    @csrf
+                                </form>
+                            </a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                <i class="fa fa-sign-out"></i> {{ __('Logout') }}
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                             </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
                         </div>
                     </li>
                         @if (Auth::user()->isAdmin())

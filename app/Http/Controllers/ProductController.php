@@ -11,8 +11,7 @@ use function PHPUnit\Framework\lessThanOrEqual;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(){
     }
 
     public function index(){
@@ -44,13 +43,13 @@ class ProductController extends Controller
 
     public function getCart(){
         $wishlist = Auth::user()->wishlist('cart');
-        $totalPrice = 0;
+        $total_price = 0;
 
         foreach($wishlist as $item) {
-            $totalPrice += $item->price;
+            $total_price += $item->price;
         }
 
-        return view('pages.home_cart', [ 'cart' => $wishlist, 'totalPrice' => $totalPrice ]);
+        return view('pages.home_cart', [ 'cart' => $wishlist, 'totalPrice' => $total_price ]);
     }
 
     public function showProduct($productId){
@@ -133,21 +132,5 @@ class ProductController extends Controller
 
     public function deleteFromCart($id = null){
         return $this->cartManipulate($id, true);
-    }
-
-    public function checkOut()
-    {
-        $userOrder = UserOrder::where('user_id', '=', Auth::user()->id)->get();
-
-        if ($userOrder) {
-            $totalPrice = 0;
-            foreach ($userOrder as $item){
-                $totalPrice += $item->price;
-            }
-
-            return view('pages.checkout', [ 'userOrder' => $userOrder, 'totalPrice' => $totalPrice ]);
-        }
-
-        return view('home');
     }
 }
